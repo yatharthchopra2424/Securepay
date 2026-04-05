@@ -10,6 +10,88 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .sp-intro{padding:80px 0 50px;background:linear-gradient(180deg,#fff 0%,#f5f3ff 100%);text-align:center}
+    .sp-intro p{font-size:1.05rem;color:var(--muted);max-width:720px;margin:0 auto;line-height:1.75}
+    .sp-partners{padding:50px 0;background:#fff;text-align:center}
+    .sp-partners p{font-size:.88rem;color:var(--muted);margin-bottom:32px}
+    .partner-logos{display:flex;justify-content:center;align-items:center;gap:40px;flex-wrap:wrap;opacity:.55}
+    .partner-logos div{font-size:1.4rem;font-weight:800;letter-spacing:.05em;color:var(--text);text-transform:uppercase}
+    .sp-trusted-new{padding:30px 0 10px;background:#fff;text-align:center}
+    .sp-stats{padding:40px 0 70px;background:#fff}
+    .stats-grid-new{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:800px;margin:0 auto;text-align:center}
+    .stat-box-new{background:linear-gradient(135deg,rgba(109,40,217,.06),rgba(139,92,246,.03));border:1px solid var(--border2);border-radius:20px;padding:36px 24px;transition:all .3s}
+    .stat-box-new:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+    .stat-num-new{font-size:2.6rem;font-weight:800;letter-spacing:-.04em;background:linear-gradient(135deg,var(--purple),var(--purple3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .stat-label-new{font-size:.88rem;color:var(--muted);margin-top:6px;font-weight:500}
+    .sp-solutions{padding:100px 0;background:linear-gradient(135deg,#f5f3ff,#faf5ff,#fff)}
+    .sol-tabs{display:flex;justify-content:center;gap:10px;margin-bottom:50px;flex-wrap:wrap}
+    .sol-tab-btn{padding:12px 28px;border-radius:100px;border:1px solid var(--border2);background:#fff;font-family:var(--font);font-size:.88rem;font-weight:600;color:var(--muted);cursor:pointer;transition:all .25s}
+    .sol-tab-btn:hover{border-color:var(--purple);color:var(--purple)}
+    .sol-tab-btn.active{background:linear-gradient(135deg,var(--purple),var(--purple3));color:#fff;border-color:transparent;box-shadow:0 4px 20px rgba(109,40,217,.3)}
+    .sol-panel{display:none}.sol-panel.active{display:block;animation:fadeUp .45s ease}
+    .sol-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .sol-card{background:#fff;border:1px solid var(--border);border-radius:20px;padding:30px 26px;transition:all .3s;cursor:default}
+    .sol-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:var(--border2)}
+    .sol-card h4{font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:8px}
+    .sol-card .sol-tagline{font-size:.82rem;font-weight:600;color:var(--purple3);margin-bottom:10px;font-style:italic}
+    .sol-card p{font-size:.88rem;color:var(--muted);line-height:1.65;margin-bottom:16px}
+    .sol-card .explore-link{font-size:.82rem;font-weight:700;color:var(--purple);text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:gap .2s}
+    .sol-card:hover .explore-link{gap:10px}
+    .sp-platforms{padding:80px 0;background:#fff}
+    .platforms-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+    .plat-card{background:linear-gradient(135deg,rgba(109,40,217,.04),rgba(139,92,246,.02));border:1px solid var(--border);border-radius:20px;padding:36px 30px;transition:all .3s}
+    .plat-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:var(--border2)}
+    .plat-card .plat-eyebrow{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--purple3);margin-bottom:8px}
+    .plat-card h3{font-size:1.3rem;font-weight:800;color:var(--text);margin-bottom:10px}
+    .plat-card p{font-size:.9rem;color:var(--muted);line-height:1.65}
+    .sp-devs{padding:100px 0;background:linear-gradient(135deg,#1e1b4b,#312e81,#3730a3);color:#fff;position:relative;overflow:hidden}
+    .sp-devs .container{position:relative;z-index:1}
+    .sp-devs .dev-header{max-width:600px;margin-bottom:50px}
+    .sp-devs h2{font-size:clamp(2rem,3.5vw,2.8rem);font-weight:800;margin-bottom:16px;letter-spacing:-.03em}
+    .sp-devs .dev-header p{color:rgba(255,255,255,.65);font-size:1rem;line-height:1.7}
+    .dev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .dev-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:28px 24px;backdrop-filter:blur(8px);transition:all .3s}
+    .dev-card:hover{background:rgba(255,255,255,.1);transform:translateY(-4px);border-color:rgba(255,255,255,.2)}
+    .dev-card h4{font-size:1.05rem;font-weight:700;margin-bottom:6px}
+    .dev-card p{font-size:.85rem;color:rgba(255,255,255,.55);line-height:1.65}
+    .dev-badge{display:inline-flex;align-items:center;gap:6px;margin-top:40px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:100px;padding:10px 20px;font-size:.82rem;font-weight:600;color:rgba(255,255,255,.7)}
+    .sp-features-new{padding:100px 0;background:#fff}
+    .feat6-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .feat6-card{background:#fff;border:1px solid var(--border);border-radius:20px;padding:30px 24px;transition:all .3s}
+    .feat6-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:var(--border2)}
+    .feat6-card h4{font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:6px}
+    .feat6-card .feat-tagline{font-size:.82rem;font-weight:600;color:var(--purple-light);margin-bottom:10px;font-style:italic}
+    .feat6-card p{font-size:.85rem;color:var(--muted);line-height:1.65}
+    .sp-contact{padding:100px 0;background:linear-gradient(135deg,#f5f3ff,#ede9fe)}
+    .contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+    .contact-info h2{font-size:clamp(1.8rem,3vw,2.5rem);font-weight:800;color:var(--text);margin-bottom:12px;letter-spacing:-.03em}
+    .contact-info p{font-size:1rem;color:var(--muted);line-height:1.7}
+    .contact-form-card{background:#fff;border:1px solid var(--border);border-radius:24px;padding:36px;box-shadow:var(--shadow-lg)}
+    .cf-group{margin-bottom:18px}
+    .cf-group label{display:block;font-size:.82rem;font-weight:600;color:var(--text2);margin-bottom:6px}
+    .cf-group input,.cf-group textarea,.cf-group select{width:100%;background:#f9f8ff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;color:var(--text);font-family:var(--font);font-size:.9rem;outline:none;transition:all .2s;box-sizing:border-box}
+    .cf-group input:focus,.cf-group textarea:focus,.cf-group select:focus{border-color:var(--purple3);box-shadow:0 0 0 3px rgba(139,92,246,.12)}
+    .cf-group textarea{resize:vertical;min-height:100px}
+    .cf-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .btn-submit{width:100%;background:linear-gradient(135deg,var(--purple),var(--purple3));border:none;color:#fff;padding:14px;border-radius:10px;font-family:var(--font);font-size:.95rem;font-weight:700;cursor:pointer;transition:all .25s;margin-top:6px}
+    .btn-submit:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(109,40,217,.4)}
+    .sp-faq{padding:100px 0;background:#fff}
+    .faq-category{margin-bottom:32px}
+    .faq-cat-title{font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--purple3);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+    .faq-item{border:1px solid var(--border);border-radius:14px;margin-bottom:8px;overflow:hidden;transition:all .2s}
+    .faq-item:hover{border-color:var(--border2)}
+    .faq-q{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer;font-size:.92rem;font-weight:600;color:var(--text);background:#fff;transition:background .2s;user-select:none}
+    .faq-q:hover{background:rgba(109,40,217,.03)}
+    .faq-q .faq-arrow{font-size:1.2rem;color:var(--purple3);transition:transform .3s;flex-shrink:0}
+    .faq-item.open .faq-q .faq-arrow{transform:rotate(45deg)}
+    .faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease}
+    .faq-item.open .faq-a{max-height:600px}
+    .faq-a-inner{padding:0 20px 18px;font-size:.88rem;color:var(--muted);line-height:1.72}
+    .faq-more{text-align:center;margin-top:30px}
+    .faq-more a{font-size:.9rem;font-weight:600;color:var(--purple);text-decoration:none}
+    @media(max-width:900px){.stats-grid-new{grid-template-columns:1fr;max-width:400px}.sol-grid,.dev-grid,.feat6-grid{grid-template-columns:1fr}.platforms-grid,.contact-wrap{grid-template-columns:1fr}.sol-tabs{gap:6px}.sol-tab-btn{padding:10px 18px;font-size:.8rem}}
+  </style>
 </head>
 <body>
   <div id="cursor-glow"></div>
@@ -131,6 +213,46 @@
       </div>
     </div>
   </section>
+
+  <!-- NEW: TRUSTED + STATS -->
+  <section class="sp-trusted-new"><div class="container reveal"><div class="eyebrow c">Trusted By The Best</div><p style="font-size:.88rem;color:var(--muted)">Trusted by thousands of merchants across India</p></div></section>
+  <section class="sp-stats"><div class="container"><div class="stats-grid-new reveal">
+    <div class="stat-box-new"><div class="stat-num-new">2500+</div><div class="stat-label-new">Active Merchants</div></div>
+    <div class="stat-box-new"><div class="stat-num-new">&#x20B9;1,200 Cr+</div><div class="stat-label-new">Transactions Processed</div></div>
+    <div class="stat-box-new"><div class="stat-num-new">4.7</div><div class="stat-label-new">App Rating</div></div>
+  </div></div></section>
+
+  <!-- NEW: GET STARTED INTRO -->
+  <section class="sp-intro"><div class="container reveal"><div class="eyebrow c">Get Started With Securepay</div><p>From seamless payment experiences and smart transaction routing to managing multiple banks, QR codes, Soundbox UPI, Cards and end-to-end payment infrastructure &mdash; SecurePay powers everything that helps you scale faster, safer, and smarter.</p></div></section>
+
+  <!-- NEW: POWERED BY GIANTS -->
+  <section class="sp-partners"><div class="container reveal"><div class="eyebrow c">Powered by Giants</div><p>Powered by reliable fintech infrastructure.</p><div class="partner-logos"><div>NPCI</div><div>VISA</div><div>Mastercard</div><div>RuPay</div><div>UPI</div><div>BBPS</div></div></div></section>
+
+  <!-- NEW: TABBED SOLUTIONS -->
+  <section id="solutions" class="sp-solutions s-wrap"><div class="container">
+    <div class="f-hdr reveal"><div class="eyebrow c">One platform. Every payment solution.</div><h2 class="sec-t" style="text-align:center">Explore a powerful, modular payment ecosystem</h2><p class="sec-s" style="text-align:center;margin:0 auto">Built to simplify collections, strengthen security, and help businesses scale effortlessly.</p></div>
+    <div class="sol-tabs reveal">
+      <button class="sol-tab-btn active" data-tab="payments">Payments &amp; Collections</button>
+      <button class="sol-tab-btn" data-tab="banking">Banking &amp; Infrastructure</button>
+      <button class="sol-tab-btn" data-tab="devices">Devices &amp; On-Ground</button>
+    </div>
+    <div class="sol-panel active" id="tab-payments-new"><div class="sol-grid">
+      <div class="sol-card reveal"><h4>Online Payments (Payment Gateway)</h4><div class="sol-tagline">Accept payments online. Fast. Secure. Reliable.</div><p>Enable seamless online payments through cards, UPI, net banking and wallets.</p><a href="#" class="explore-link">Explore now &#8594;</a></div>
+      <div class="sol-card reveal"><h4>QR Code Payments</h4><div class="sol-tagline">Simple scans. Instant payments.</div><p>Accept payments through static and dynamic QR codes across UPI apps.</p><a href="#" class="explore-link">Explore now &#8594;</a></div>
+      <div class="sol-card reveal"><h4>POS Solutions</h4><div class="sol-tagline">In-store payments, simplified.</div><p>Accept card, UPI, wallet and contactless payments at physical locations.</p><a href="#" class="explore-link">Explore now &#8594;</a></div>
+      <div class="sol-card reveal"><h4>Auto Collect</h4><div class="sol-tagline">Collect payments automatically.</div><p>Automate collections using virtual accounts and smart payment identifiers.</p><a href="#" class="explore-link">Explore now &#8594;</a></div>
+      <div class="sol-card reveal"><h4>Payout System</h4><div class="sol-tagline">Send money instantly, at scale.</div><p>Disburse payments to vendors, partners, or customers in real time.</p><a href="#" class="explore-link">Explore now &#8594;</a></div>
+      <div class="sol-card reveal"><h4>BBPS Platform</h4><div class="sol-tagline">One platform for all bill payments.</div><p>Enable utility, telecom, and bill payments through a BBPS-compliant system.</p><a href="#" class="explore-link">Explore now &#8594;</a></div>
+    </div></div>
+    <div class="sol-panel" id="tab-banking-new"><div class="sol-grid">
+      <div class="sol-card reveal"><h4>UPI Switch</h4><div class="sol-tagline">Power high-performance UPI transactions.</div><p>Process UPI transactions with speed, reliability, and intelligent routing.</p><a href="#" class="explore-link">Explore now &#8594;</a></div>
+    </div></div>
+    <div class="sol-panel" id="tab-devices-new"><div class="sol-grid">
+      <div class="sol-card reveal"><h4>Soundbox</h4><div class="sol-tagline">Hear every successful payment.</div><p>Real-time audio confirmations for UPI payments.</p><a href="#" class="explore-link">Explore now &#8594;</a></div>
+      <div class="sol-card reveal"><h4>QR Codes</h4><div class="sol-tagline">Accept payments with confidence.</div><p>Secure, easy-to-deploy QR codes that work across all major UPI apps.</p><a href="#" class="explore-link">Explore now &#8594;</a></div>
+      <div class="sol-card reveal"><h4>Payment App</h4><div class="sol-tagline">Accept digital payments effortlessly.</div><p>Turn your smartphone into a payment acceptance tool.</p><a href="#" class="explore-link">Explore now &#8594;</a></div>
+    </div></div>
+  </div></section>
 
   <!-- ═══ PROCESS (HOW IT WORKS) ═══ -->
   <section id="how" class="s-wrap">
@@ -271,6 +393,12 @@
       </div>
     </div>
   </section>
+
+  <!-- NEW: PLATFORMS -->
+  <section class="sp-platforms"><div class="container"><div class="f-hdr reveal"><div class="eyebrow c">Platforms and Tools</div></div><div class="platforms-grid reveal">
+    <div class="plat-card"><div class="plat-eyebrow">Merchant Management Platform</div><h3>One dashboard. Complete control.</h3><p>Manage merchants, transactions, settlements, and reports from a single unified platform.</p></div>
+    <div class="plat-card"><div class="plat-eyebrow">Mobile Applications</div><h3>Payments and insights, on the go.</h3><p>Access real-time transaction data, settlements, and account insights through our mobile applications.</p></div>
+  </div></div></section>
 
   <!-- ═══ VOICE POWERED PAYMENTS ═══ -->
   <section id="voice">
@@ -504,6 +632,74 @@
       </div>
     </div>
   </section>
+
+  <!-- NEW: FOR DEVELOPERS -->
+  <section id="developers" class="sp-devs"><div class="container">
+    <div class="dev-header reveal"><div class="eyebrow" style="color:rgba(196,181,253,.9)">For developers. By developers.</div><h2>Built for builders who ship fast and scale confidently.</h2><p>Our APIs are designed to be flexible, reliable, and easy to integrate.</p></div>
+    <div class="dev-grid reveal">
+      <div class="dev-card"><h4>Integrations</h4><p>Plug in with ease. Explore ready-to-use integrations across payment gateways, UPI, banking systems.</p></div>
+      <div class="dev-card"><h4>API Reference</h4><p>Clear, complete, and developer-friendly. Access detailed API documentation with endpoints and best practices.</p></div>
+      <div class="dev-card"><h4>Dev Studio</h4><p>Build. Test. Launch. Experiment with APIs, SDKs, and workflows in our interactive developer playground.</p></div>
+    </div>
+  </div></section>
+
+  <!-- NEW: POWERFUL FEATURES -->
+  <section class="sp-features-new"><div class="container">
+    <div class="f-hdr reveal"><div class="eyebrow c">Powerful features. Built to scale.</div><h2 class="sec-t" style="text-align:center">Everything you need to collect payments and grow.</h2></div>
+    <div class="feat6-grid reveal">
+      <div class="feat6-card"><h4>24&#215;7 Support</h4><div class="feat-tagline">Payments don't sleep. Neither do we.</div><p>Round-the-clock assistance to resolve issues fast.</p></div>
+      <div class="feat6-card"><h4>Actionable Insights</h4><div class="feat-tagline">Know more. Earn more.</div><p>Real-time dashboards and reports that turn transactions into business intelligence.</p></div>
+      <div class="feat6-card"><h4>Fast Onboarding</h4><div class="feat-tagline">Go live in days, not weeks.</div><p>A simple, guided onboarding process with no technical complexity.</p></div>
+      <div class="feat6-card"><h4>Built-for-Business</h4><div class="feat-tagline">Designed for the real world.</div><p>Reliable QR codes, Soundbox devices, and in-store solutions that perform consistently.</p></div>
+      <div class="feat6-card"><h4>Enterprise Reliability</h4><div class="feat-tagline">Engineered to stay online.</div><p>High uptime, rigorous testing, and secure infrastructure built to handle scale.</p></div>
+      <div class="feat6-card"><h4>Measurable Results</h4><div class="feat-tagline">Track growth. Optimize constantly.</div><p>Clear visibility into transactions, settlements, and performance.</p></div>
+    </div>
+  </div></section>
+
+  <!-- NEW: CONTACT FORM -->
+  <section id="contact" class="sp-contact"><div class="container"><div class="contact-wrap">
+    <div class="contact-info reveal"><h2>Let's get you to the <span class="grad">right place</span></h2><p>We just need a few quick details to connect you with the right team.</p></div>
+    <div class="contact-form-card reveal"><form id="sp-contact-form" onsubmit="return false;">
+      <div class="cf-group"><label>Full Name</label><input type="text" placeholder="Your full name" required /></div>
+      <div class="cf-row"><div class="cf-group"><label>State</label><input type="text" placeholder="Your state" /></div><div class="cf-group"><label>City</label><input type="text" placeholder="Your city" /></div></div>
+      <div class="cf-group"><label>Services</label><select><option value="">Select a service</option><option>Payment Gateway</option><option>QR Code Payments</option><option>POS Solutions</option><option>Soundbox</option><option>Payout System</option><option>BBPS Platform</option><option>UPI Switch</option><option>Other</option></select></div>
+      <div class="cf-group"><label>Message</label><textarea placeholder="Tell us about your requirements..." rows="4"></textarea></div>
+      <button type="submit" class="btn-submit">Submit Request &#8594;</button>
+    </form></div>
+  </div></div></section>
+
+  <!-- NEW: FAQ -->
+  <section id="faq" class="sp-faq"><div class="container">
+    <div class="f-hdr reveal"><h2 class="sec-t" style="text-align:center">Frequently Asked Questions</h2></div>
+    <div class="faq-category reveal"><div class="faq-cat-title">Onboarding</div>
+      <div class="faq-item"><div class="faq-q">What is SecurePay and how does it work? <span class="faq-arrow">+</span></div><div class="faq-a"><div class="faq-a-inner">SecurePay is a unified digital payment solution that allows businesses to accept, process, and manage transactions securely through multiple payment channels.</div></div></div>
+      <div class="faq-item"><div class="faq-q">How do I get started? <span class="faq-arrow">+</span></div><div class="faq-a"><div class="faq-a-inner">Sign up on our Merchant App, complete basic onboarding details, and submit the required documents. Once verified, you can start accepting payments immediately.</div></div></div>
+      <div class="faq-item"><div class="faq-q">How long does onboarding take? <span class="faq-arrow">+</span></div><div class="faq-a"><div class="faq-a-inner">Onboarding is usually completed within 24-48 hours after successful document verification.</div></div></div>
+      <div class="faq-item"><div class="faq-q">Can SecurePay accept any payment type? <span class="faq-arrow">+</span></div><div class="faq-a"><div class="faq-a-inner">Yes. SecurePay enables businesses to accept UPI, credit cards, debit cards, net banking, digital wallets, and QR-based payments from a single dashboard.</div></div></div>
+    </div>
+    <div class="faq-category reveal"><div class="faq-cat-title">Usage</div>
+      <div class="faq-item"><div class="faq-q">Can I accept both online and offline payments? <span class="faq-arrow">+</span></div><div class="faq-a"><div class="faq-a-inner">Yes. We help you accept payments online via payment gateway and offline through QR codes, POS solutions, and Soundbox.</div></div></div>
+      <div class="faq-item"><div class="faq-q">Can I track payments in real time? <span class="faq-arrow">+</span></div><div class="faq-a"><div class="faq-a-inner">Absolutely. The dashboard and mobile app provide real-time transaction tracking, settlement reports, and analytics.</div></div></div>
+    </div>
+    <div class="faq-category reveal"><div class="faq-cat-title">Charges &amp; Pricing</div>
+      <div class="faq-item"><div class="faq-q">Is there any setup or monthly fee? <span class="faq-arrow">+</span></div><div class="faq-a"><div class="faq-a-inner">No. You only pay per transaction.</div></div></div>
+      <div class="faq-item"><div class="faq-q">Are there any hidden fees? <span class="faq-arrow">+</span></div><div class="faq-a"><div class="faq-a-inner">No. We follow a transparent pricing model with no hidden costs.</div></div></div>
+      <div class="faq-item"><div class="faq-q">When will I receive my settlements? <span class="faq-arrow">+</span></div><div class="faq-a"><div class="faq-a-inner">Settlements are processed daily and typically credited within 24 hours.</div></div></div>
+    </div>
+    <div class="faq-category reveal"><div class="faq-cat-title">Technology &amp; APIs</div>
+      <div class="faq-item"><div class="faq-q">Does SecurePay provide APIs for developers? <span class="faq-arrow">+</span></div><div class="faq-a"><div class="faq-a-inner">Yes. We offer secure, well-documented APIs and SDKs for payment processing, payouts, and merchant management.</div></div></div>
+      <div class="faq-item"><div class="faq-q">Can I test APIs before going live? <span class="faq-arrow">+</span></div><div class="faq-a"><div class="faq-a-inner">Yes. Developers can use our Dev Studio to test integrations in a sandbox environment.</div></div></div>
+    </div>
+    <div class="faq-category reveal"><div class="faq-cat-title">Security &amp; Compliance</div>
+      <div class="faq-item"><div class="faq-q">Is SecurePay safe? <span class="faq-arrow">+</span></div><div class="faq-a"><div class="faq-a-inner">SecurePay is PCI-DSS compliant and uses industry-standard encryption to protect all transactions and data.</div></div></div>
+      <div class="faq-item"><div class="faq-q">Does SecurePay comply with RBI guidelines? <span class="faq-arrow">+</span></div><div class="faq-a"><div class="faq-a-inner">Yes. SecurePay operates in alignment with applicable RBI and NPCI guidelines.</div></div></div>
+    </div>
+    <div class="faq-category reveal"><div class="faq-cat-title">Support</div>
+      <div class="faq-item"><div class="faq-q">Is support available 24x7? <span class="faq-arrow">+</span></div><div class="faq-a"><div class="faq-a-inner">Yes. We offer 24x7 support for critical payment and transaction-related issues.</div></div></div>
+      <div class="faq-item"><div class="faq-q">How do I contact support? <span class="faq-arrow">+</span></div><div class="faq-a"><div class="faq-a-inner">Visit our Contact section and submit the form, and a member of our team will get back to you.</div></div></div>
+    </div>
+    <div class="faq-more reveal"><a href="#contact">Have more questions? Contact Us &#8594;</a></div>
+  </div></section>
 
   <!-- ═══ THE FUTURE OF PAYMENTS (CTA) ═══ -->
   <section id="cta">
@@ -1543,6 +1739,35 @@
       });
     });
   });
+  </script>
+
+  <!-- NEW SECTIONS JS -->
+  <script>
+  // FAQ Accordion
+  document.querySelectorAll('.faq-q').forEach(function(q){
+    q.addEventListener('click',function(){
+      var item=q.parentElement;var wasOpen=item.classList.contains('open');
+      item.parentElement.querySelectorAll('.faq-item').forEach(function(i){i.classList.remove('open')});
+      if(!wasOpen) item.classList.add('open');
+    });
+  });
+  // Solution Tabs
+  document.querySelectorAll('.sol-tab-btn').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      document.querySelectorAll('.sol-tab-btn').forEach(function(b){b.classList.remove('active')});
+      btn.classList.add('active');
+      document.querySelectorAll('.sol-panel').forEach(function(p){p.classList.remove('active')});
+      var tabId='tab-'+btn.dataset.tab+'-new';
+      document.getElementById(tabId).classList.add('active');
+    });
+  });
+  // Contact form
+  var cf=document.getElementById('sp-contact-form');
+  if(cf){cf.addEventListener('submit',function(e){
+    e.preventDefault();var btn=cf.querySelector('.btn-submit');
+    btn.textContent='Submitted \u2713';btn.style.background='#16a34a';
+    setTimeout(function(){btn.textContent='Submit Request \u2192';btn.style.background='';cf.reset();},3000);
+  });}
   </script>
 
   <script src="js/main.js"></script>
